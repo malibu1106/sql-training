@@ -2,7 +2,7 @@
 require_once("./src/connect.php");
 
 // Requête SQL pour récupérer la moyenne d'âge des utilisateurs groupés par genre
-$sql = "";
+$sql = "SELECT gender, AVG(YEAR(CURRENT_DATE) - YEAR(birth_date)) as avg_age FROM users GROUP BY gender";
 
 
 // Préparation de la requête
@@ -24,12 +24,13 @@ require_once("./src/close.php");
 </head>
 <body>
     <?php include_once('./components/nav.php') ?>
-    <pre><?= print_r($result) ?></pre>
+    <!-- <pre><?= print_r($result) ?></pre> -->
 
     <div>
         <?php
             foreach ($result as $user) {
                 // afficher la moyenne d'âge des utilisateurs groupés par genre
+                echo $user['gender'] . " : Moyenne d'âge : ~" . round($user['avg_age'], 0) . "ans<br>";
             }
         ?>
     </div>
